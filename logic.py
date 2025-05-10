@@ -68,8 +68,8 @@ class DB_Manager:
         self.__executemany('INSERT OR IGNORE INTO yapimci (yapimci_name) VALUES(?)', yapimcilar)
 
     def insert_project(self, data):
-        sql = """INSERT INTO projects (user_id, project_name, url, status_id) 
-                 VALUES(?, ?, ?, ?)"""
+        sql = """INSERT INTO projects (user_id, project_name, description, yapimci, url, status_id) 
+                 VALUES(? , ? , ? , ? , ? , ?)"""
         self.__executemany(sql, data)
 
     def insert_skill(self, user_id, project_name, skill):
@@ -84,6 +84,8 @@ class DB_Manager:
 
     def get_statuses(self):
         return self.__select_data("SELECT status_name FROM status")
+    def get_yapimci(self):
+        return self.__select_data("SELECT yapimci_name FROM yapimci")
 
     def get_status_id(self, status_name):
         res = self.__select_data('SELECT status_id FROM status WHERE status_name = ?', (status_name,))
